@@ -187,3 +187,15 @@ alter table ghi_danh     enable row level security;
 alter table dot_nop      enable row level security;
 alter table bai_nop      enable row level security;
 alter table lich_su_nop  enable row level security;
+
+-- ---------------------------------------------------------------------------
+-- Quyền cho Data API.
+--
+-- Supabase bản mới KHÔNG tự mở quyền cho bảng mới tạo, nên thiếu đoạn này thì
+-- trên bản chạy thật mọi truy vấn sẽ trả về "permission denied" dù bảng có
+-- thật. Chỉ cấp cho service_role, tức chỉ máy chủ của ứng dụng đọc ghi được;
+-- anon và authenticated không được cấp gì.
+-- ---------------------------------------------------------------------------
+grant usage on schema public to service_role;
+grant select, insert, update, delete on all tables in schema public to service_role;
+grant usage, select on all sequences in schema public to service_role;

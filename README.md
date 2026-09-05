@@ -108,8 +108,19 @@ project Supabase khác trên cùng máy.
    `supabase/migrations/20260905000100_khoi_tao.sql` rồi bấm **Run**. Phải thấy
    báo Success.
 5. Vẫn ở SQL Editor, mở query mới, dán toàn bộ `supabase/seed.sql` rồi **Run**.
-   Đây là lệnh nạp lớp AJP20101, 42 sinh viên và 6 đợt nộp. Bỏ qua bước này
-   cũng được: lớp và danh sách nhập thẳng trên web cũng xong.
+   Đây là lệnh nạp lớp AJP20101, 42 sinh viên lớp 24CT1 và 6 đợt nộp. Bỏ qua
+   bước này cũng được: lớp và danh sách nhập thẳng trên web cũng xong.
+
+   Kiểm nhanh bằng một query nữa, phải ra đúng 42 và 6:
+
+   ```sql
+   select (select count(*) from sinh_vien) as sinh_vien,
+          (select count(*) from dot_nop)   as dot_nop;
+   ```
+
+   > File migration có đoạn `grant ... to service_role` ở cuối. Supabase bản mới
+   > không tự mở quyền cho bảng mới tạo, thiếu đoạn đó thì web chạy lên sẽ báo
+   > lỗi 500 với thông báo `permission denied`. Đừng cắt bớt khi dán.
 6. Vào **Project Settings → API**, chép hai giá trị:
    - **Project URL**, dạng `https://xxxxxxxx.supabase.co`
    - **service_role key** (bấm Reveal). Key này bỏ qua mọi phân quyền nên chỉ
