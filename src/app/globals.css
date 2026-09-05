@@ -1,0 +1,207 @@
+@import 'tailwindcss';
+
+/* =====================================================================
+   HỆ MÀU
+   Nền trung tính lệch nhẹ về xanh rêu, để cùng hệ với màu nhấn.
+   Màu ngữ nghĩa (ổn / cảnh báo / nghiêm trọng) tách khỏi màu nhấn.
+   ===================================================================== */
+:root {
+  --nen: #f1f4f1;
+  --nen-noi: #ffffff;
+  --nen-chim: #e5eae5;
+  --nen-ray: #edf1ed;
+  --vien: #d2d9d2;
+  --vien-dam: #b6c0b6;
+  --muc: #141d1a;
+  --muc-nhat: #58655f;
+  --muc-mo: #8b968f;
+
+  --nhan: #1f5f5b;
+  --nhan-sang: #2c8079;
+  --nhan-nen: #e0ebe8;
+
+  --on: #2f6b4c;
+  --on-nen: #e2ede5;
+  --canh-bao: #97690f;
+  --canh-bao-nen: #f4ecd8;
+  --nghiem-trong: #a5352a;
+  --nghiem-trong-nen: #f6e4e1;
+
+  --bong: 0 1px 2px rgb(20 29 26 / 0.06), 0 1px 1px rgb(20 29 26 / 0.04);
+  --bong-noi: 0 6px 24px -8px rgb(20 29 26 / 0.18);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --nen: #0e1412;
+    --nen-noi: #151d1a;
+    --nen-chim: #1b2522;
+    --nen-ray: #121a18;
+    --vien: #283330;
+    --vien-dam: #3a4744;
+    --muc: #e6ece9;
+    --muc-nhat: #94a29c;
+    --muc-mo: #6d7a75;
+
+    --nhan: #55b3a6;
+    --nhan-sang: #6ec9bb;
+    --nhan-nen: #16302c;
+
+    --on: #5db489;
+    --on-nen: #142b20;
+    --canh-bao: #d3a34a;
+    --canh-bao-nen: #2e2517;
+    --nghiem-trong: #e0715f;
+    --nghiem-trong-nen: #331a17;
+
+    --bong: 0 1px 2px rgb(0 0 0 / 0.4);
+    --bong-noi: 0 8px 28px -10px rgb(0 0 0 / 0.7);
+  }
+}
+
+:root[data-theme='light'] {
+  --nen: #f1f4f1; --nen-noi: #ffffff; --nen-chim: #e5eae5; --nen-ray: #edf1ed;
+  --vien: #d2d9d2; --vien-dam: #b6c0b6;
+  --muc: #141d1a; --muc-nhat: #58655f; --muc-mo: #8b968f;
+  --nhan: #1f5f5b; --nhan-sang: #2c8079; --nhan-nen: #e0ebe8;
+  --on: #2f6b4c; --on-nen: #e2ede5;
+  --canh-bao: #97690f; --canh-bao-nen: #f4ecd8;
+  --nghiem-trong: #a5352a; --nghiem-trong-nen: #f6e4e1;
+  --bong: 0 1px 2px rgb(20 29 26 / 0.06), 0 1px 1px rgb(20 29 26 / 0.04);
+  --bong-noi: 0 6px 24px -8px rgb(20 29 26 / 0.18);
+}
+
+:root[data-theme='dark'] {
+  --nen: #0e1412; --nen-noi: #151d1a; --nen-chim: #1b2522; --nen-ray: #121a18;
+  --vien: #283330; --vien-dam: #3a4744;
+  --muc: #e6ece9; --muc-nhat: #94a29c; --muc-mo: #6d7a75;
+  --nhan: #55b3a6; --nhan-sang: #6ec9bb; --nhan-nen: #16302c;
+  --on: #5db489; --on-nen: #142b20;
+  --canh-bao: #d3a34a; --canh-bao-nen: #2e2517;
+  --nghiem-trong: #e0715f; --nghiem-trong-nen: #331a17;
+  --bong: 0 1px 2px rgb(0 0 0 / 0.4);
+  --bong-noi: 0 8px 28px -10px rgb(0 0 0 / 0.7);
+}
+
+@theme inline {
+  --color-nen: var(--nen);
+  --color-noi: var(--nen-noi);
+  --color-chim: var(--nen-chim);
+  --color-ray: var(--nen-ray);
+  --color-vien: var(--vien);
+  --color-vien-dam: var(--vien-dam);
+  --color-muc: var(--muc);
+  --color-muc-nhat: var(--muc-nhat);
+  --color-muc-mo: var(--muc-mo);
+  --color-nhan: var(--nhan);
+  --color-nhan-sang: var(--nhan-sang);
+  --color-nhan-nen: var(--nhan-nen);
+  --color-on: var(--on);
+  --color-on-nen: var(--on-nen);
+  --color-canh-bao: var(--canh-bao);
+  --color-canh-bao-nen: var(--canh-bao-nen);
+  --color-nghiem-trong: var(--nghiem-trong);
+  --color-nghiem-trong-nen: var(--nghiem-trong-nen);
+
+  --font-than: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-tieu-de: var(--font-plex-condensed), var(--font-plex-sans), ui-sans-serif, sans-serif;
+  --font-so: var(--font-plex-mono), ui-monospace, 'Cascadia Mono', monospace;
+}
+
+/* =====================================================================
+   NỀN TẢNG
+   ===================================================================== */
+* { border-color: var(--vien); }
+
+html { color-scheme: light dark; }
+:root[data-theme='light'] html, html[data-theme='light'] { color-scheme: light; }
+:root[data-theme='dark'] html, html[data-theme='dark'] { color-scheme: dark; }
+
+body {
+  background: var(--nen);
+  color: var(--muc);
+  font-family: var(--font-than);
+  font-size: 14px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-tieu-de);
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+:focus-visible {
+  outline: 2px solid var(--nhan-sang);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+::selection { background: var(--nhan-nen); color: var(--muc); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Thanh cuộn mảnh, cùng tông với nền */
+* { scrollbar-width: thin; scrollbar-color: var(--vien-dam) transparent; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb {
+  background: var(--vien-dam);
+  border-radius: 99px;
+  border: 3px solid var(--nen);
+}
+::-webkit-scrollbar-track { background: transparent; }
+
+/* =====================================================================
+   LỚP TIỆN ÍCH DÙNG LẠI
+   ===================================================================== */
+.nhan-chu {
+  font-family: var(--font-tieu-de);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--muc-mo);
+}
+
+.so { font-family: var(--font-so); font-variant-numeric: tabular-nums; }
+
+.the {
+  background: var(--nen-noi);
+  border: 1px solid var(--vien);
+  border-radius: 6px;
+  box-shadow: var(--bong);
+}
+
+.cuon-ngang { overflow-x: auto; }
+
+/* Vạch chéo cho ô bị khóa trên lưới thời khóa biểu */
+.gach-cheo {
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent, transparent 5px,
+    var(--vien) 5px, var(--vien) 6px
+  );
+}
+
+/* =====================================================================
+   IN / LƯU PDF
+   Trang in ẩn thanh điều hướng và mọi thứ ngoài vùng .in-duoc.
+   ===================================================================== */
+@media print {
+  :root { --nen: #ffffff; --nen-noi: #ffffff; }
+  body { background: #fff; }
+  .an-khi-in { display: none !important; }
+  .vung-in {
+    position: static !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+  @page { size: A4 landscape; margin: 10mm; }
+}

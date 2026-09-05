@@ -1,0 +1,299 @@
+{
+  "ma_lop": "24CT1",
+  "sinh_vien": [
+    {
+      "ma_sv": "2451220114",
+      "ho_dem": "Mai Nguyễn Hồng",
+      "ten": "Anh",
+      "gioi_tinh": "Nam",
+      "email": "mainguyenhonganh2912@gmail.com"
+    },
+    {
+      "ma_sv": "2451220028",
+      "ho_dem": "Ngô Quang",
+      "ten": "Bình",
+      "gioi_tinh": "Nam",
+      "email": "ngoquangbinh2912@gmail.com"
+    },
+    {
+      "ma_sv": "2451220051",
+      "ho_dem": "Trần Thanh",
+      "ten": "Bình",
+      "gioi_tinh": "Nam",
+      "email": "binsso0937821350@gmail.com"
+    },
+    {
+      "ma_sv": "2451220046",
+      "ho_dem": "Hồ Thị",
+      "ten": "Buấn",
+      "gioi_tinh": "Nữ",
+      "email": "thibuan18th03@gmail.com"
+    },
+    {
+      "ma_sv": "2451220003",
+      "ho_dem": "Nguyễn Xuân",
+      "ten": "Công",
+      "gioi_tinh": "Nam",
+      "email": "nguyenxuancong2122006@gmail.com"
+    },
+    {
+      "ma_sv": "2451220025",
+      "ho_dem": "Trần Viết",
+      "ten": "Cường",
+      "gioi_tinh": "Nam",
+      "email": "cuongtran33200@gmail.com"
+    },
+    {
+      "ma_sv": "2451220009",
+      "ho_dem": "Dương Thiện",
+      "ten": "Da",
+      "gioi_tinh": "Nam",
+      "email": "thiendaduong4444@gmail.com"
+    },
+    {
+      "ma_sv": "2451220120",
+      "ho_dem": "Đặng Thành",
+      "ten": "Danh",
+      "gioi_tinh": "Nam",
+      "email": "danh0966708759@gmail.com"
+    },
+    {
+      "ma_sv": "2451220049",
+      "ho_dem": "Huỳnh Tiến",
+      "ten": "Đạt",
+      "gioi_tinh": "Nam",
+      "email": "datpro903@gmail.com"
+    },
+    {
+      "ma_sv": "2451220033",
+      "ho_dem": "Trần Khánh",
+      "ten": "Đông",
+      "gioi_tinh": "Nam",
+      "email": "hoannh@dau.edu.vn"
+    },
+    {
+      "ma_sv": "2451220026",
+      "ho_dem": "Nguyễn Bá Hoài",
+      "ten": "Đức",
+      "gioi_tinh": "Nam",
+      "email": "duc21042006@gmail.com"
+    },
+    {
+      "ma_sv": "2451220023",
+      "ho_dem": "Phan Trí",
+      "ten": "Đức",
+      "gioi_tinh": "Nam",
+      "email": "biken.aaa111@gmail.com"
+    },
+    {
+      "ma_sv": "2451220017",
+      "ho_dem": "Trần Hoàng",
+      "ten": "Giáo",
+      "gioi_tinh": "Nam",
+      "email": "qtgiao@gmail.com"
+    },
+    {
+      "ma_sv": "2451220035",
+      "ho_dem": "Nguyễn Duy",
+      "ten": "Hải",
+      "gioi_tinh": "Nam",
+      "email": "nguyenduyhai2010.dev@gmail.com"
+    },
+    {
+      "ma_sv": "2251220249",
+      "ho_dem": "Nguyễn Thị Khánh",
+      "ten": "Hằng",
+      "gioi_tinh": "Nữ",
+      "email": "hang_2251220249@dau.edu.vn"
+    },
+    {
+      "ma_sv": "2451220056",
+      "ho_dem": "Nguyễn Văn",
+      "ten": "Hào",
+      "gioi_tinh": "Nam",
+      "email": "haovipq@gmail.com"
+    },
+    {
+      "ma_sv": "2451220002",
+      "ho_dem": "Ngô Văn",
+      "ten": "Hiếu",
+      "gioi_tinh": "Nam",
+      "email": "tranthichi12333@gmail.com"
+    },
+    {
+      "ma_sv": "2451220060",
+      "ho_dem": "Nguyễn Trần Đình",
+      "ten": "Hiếu",
+      "gioi_tinh": "Nam",
+      "email": "nguyentrandinhhieu2017@gmail.com"
+    },
+    {
+      "ma_sv": "2451220037",
+      "ho_dem": "Vương Nguyễn Việt",
+      "ten": "Hòa",
+      "gioi_tinh": "Nam",
+      "email": "vuongnguyenviethoa1111@gmail.com"
+    },
+    {
+      "ma_sv": "2451220081",
+      "ho_dem": "Võ Đăng",
+      "ten": "Khoa",
+      "gioi_tinh": "Nam",
+      "email": "khoa18673@gmail.com"
+    },
+    {
+      "ma_sv": "2451220094",
+      "ho_dem": "Nguyễn Ngọc Hoàng",
+      "ten": "Khương",
+      "gioi_tinh": "Nam",
+      "email": "khuong206111@gmail.com"
+    },
+    {
+      "ma_sv": "2251220127",
+      "ho_dem": "Chung Văn",
+      "ten": "Long",
+      "gioi_tinh": "Nam",
+      "email": "long_2251220127@dau.edu.vn"
+    },
+    {
+      "ma_sv": "2451220077",
+      "ho_dem": "Lê Nhật",
+      "ten": "Nam",
+      "gioi_tinh": "Nam",
+      "email": "lnnam28062006@gmail.com"
+    },
+    {
+      "ma_sv": "2451220030",
+      "ho_dem": "Phan Văn",
+      "ten": "Nam",
+      "gioi_tinh": "Nam",
+      "email": "phannam151001@gmail.com"
+    },
+    {
+      "ma_sv": "2451220012",
+      "ho_dem": "Võ Thị Bích",
+      "ten": "Ngọc",
+      "gioi_tinh": "Nữ",
+      "email": "1146418_ngoc@tunghia1.edu.vn"
+    },
+    {
+      "ma_sv": "2451220054",
+      "ho_dem": "Phạm Trần Thảo",
+      "ten": "Nguyên",
+      "gioi_tinh": "Nữ",
+      "email": "phamtranthaonguyen0022@gmail.com"
+    },
+    {
+      "ma_sv": "2351220103",
+      "ho_dem": "Nguyễn",
+      "ten": "Nhân",
+      "gioi_tinh": "Nam",
+      "email": "nguyennhanasdfghjkl2004@gmail.com"
+    },
+    {
+      "ma_sv": "2451220005",
+      "ho_dem": "Trần Đình",
+      "ten": "Phong",
+      "gioi_tinh": "Nam",
+      "email": "phongtrantk123@gmail.com"
+    },
+    {
+      "ma_sv": "2451220010",
+      "ho_dem": "Nguyễn Đức Hoàng",
+      "ten": "Phúc",
+      "gioi_tinh": "Nam",
+      "email": "phucndh686@gmail.com"
+    },
+    {
+      "ma_sv": "2451220016",
+      "ho_dem": "Phan Quốc",
+      "ten": "Phương",
+      "gioi_tinh": "Nam",
+      "email": "phuongphan2077@gmail.com"
+    },
+    {
+      "ma_sv": "2451220071",
+      "ho_dem": "Lê Anh",
+      "ten": "Quân",
+      "gioi_tinh": "Nam",
+      "email": "leq8026@gmail.com"
+    },
+    {
+      "ma_sv": "2451220104",
+      "ho_dem": "Nguyễn Hữu",
+      "ten": "Quân",
+      "gioi_tinh": "Nam",
+      "email": "gmquan2006@gmail.com"
+    },
+    {
+      "ma_sv": "2451220004",
+      "ho_dem": "Trương Thụy Anh",
+      "ten": "Quân",
+      "gioi_tinh": "Nam",
+      "email": "truongthuyanhquan2209@gmail.com"
+    },
+    {
+      "ma_sv": "2451220055",
+      "ho_dem": "Nguyễn Minh",
+      "ten": "Quốc",
+      "gioi_tinh": "Nam",
+      "email": "minquoc10106@gmail.com"
+    },
+    {
+      "ma_sv": "2451220024",
+      "ho_dem": "Nguyễn Minh",
+      "ten": "Tấn",
+      "gioi_tinh": "Nam",
+      "email": "nguyenminhtanqni@gmail.com"
+    },
+    {
+      "ma_sv": "2451220102",
+      "ho_dem": "Nguyễn Hữu Việt",
+      "ten": "Thắng",
+      "gioi_tinh": "Nam",
+      "email": "vietthangpq099@gmail.com"
+    },
+    {
+      "ma_sv": "2451220014",
+      "ho_dem": "Trần Quang",
+      "ten": "Thành",
+      "gioi_tinh": "Nam",
+      "email": "tranquangthanh902@gmail.com"
+    },
+    {
+      "ma_sv": "2451220001",
+      "ho_dem": "Võ Thị Thu",
+      "ten": "Trinh",
+      "gioi_tinh": "Nữ",
+      "email": "truynhzhen@gmail.com"
+    },
+    {
+      "ma_sv": "2451220053",
+      "ho_dem": "Trương Thị Thanh",
+      "ten": "Trúc",
+      "gioi_tinh": "Nữ",
+      "email": "thanhtructruongthi981@gmail.com"
+    },
+    {
+      "ma_sv": "2451220022",
+      "ho_dem": "Hoàng Nhật",
+      "ten": "Truyền",
+      "gioi_tinh": "Nam",
+      "email": "hoangnhattruyen2006@gmail.com"
+    },
+    {
+      "ma_sv": "2451220080",
+      "ho_dem": "Phan Hoàng",
+      "ten": "Vinh",
+      "gioi_tinh": "Nam",
+      "email": "vinhpromixi@gmail.com"
+    },
+    {
+      "ma_sv": "2451220050",
+      "ho_dem": "Lê Khắc",
+      "ten": "Vũ",
+      "gioi_tinh": "Nam",
+      "email": "lkvu2006@gmail.com"
+    }
+  ]
+}

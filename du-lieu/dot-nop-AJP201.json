@@ -1,0 +1,59 @@
+{
+  "ma_lop": "24CT1",
+  "dot_nop": [
+    {
+      "ma": "LAB01",
+      "ten": "Chương 1 - Java OOP, interface, mảng",
+      "mo_ta": "Quay video trình bày bài lab chương 1: lớp và đối tượng, interface, lớp ấn danh, mảng.",
+      "yeu_cau": "Video 5 đến 10 phút, quay màn hình có tiếng nói. Mở đầu đọc rõ họ tên và mã sinh viên. Phải chạy chương trình trên máy, không đọc slide.",
+      "han_nop": "2026-09-21 23:59:00+07",
+      "phut_toi_thieu": 5,
+      "thu_tu": 1
+    },
+    {
+      "ma": "LAB02",
+      "ten": "Chương 2 - Lambda, generic, stream",
+      "mo_ta": "Video bài lab chương 2: lập trình chức năng, lập trình tổng quát, biểu thức lambda và Stream API.",
+      "yeu_cau": "Video 5 đến 10 phút, quay màn hình có tiếng nói. Giải thích được vì sao chọn kiểu tổng quát đó.",
+      "han_nop": "2026-10-05 23:59:00+07",
+      "phut_toi_thieu": 5,
+      "thu_tu": 2
+    },
+    {
+      "ma": "LAB03",
+      "ten": "Chương 3 - Cấu trúc dữ liệu tập hợp",
+      "mo_ta": "Video bài lab chương 3: List, Queue, Set, Map và đặc điểm truy xuất.",
+      "yeu_cau": "Video 5 đến 10 phút. Phải đo và so sánh được thời gian truy xuất giữa hai cấu trúc.",
+      "han_nop": "2026-10-19 23:59:00+07",
+      "phut_toi_thieu": 5,
+      "thu_tu": 3
+    },
+    {
+      "ma": "LAB04",
+      "ten": "Chương 4 - Đa luồng và đồng bộ hóa",
+      "mo_ta": "Video bài lab chương 4: tạo luồng, đồng bộ hóa, java.util.concurrent.",
+      "yeu_cau": "Video 5 đến 10 phút. Phải trình diễn được một lỗi tranh chấp dữ liệu rồi sửa nó.",
+      "han_nop": "2026-11-02 23:59:00+07",
+      "phut_toi_thieu": 5,
+      "thu_tu": 4
+    },
+    {
+      "ma": "LAB05",
+      "ten": "Chương 5 - Lập trình mạng với Socket",
+      "mo_ta": "Video bài lab chương 5: giao tiếp mạng, Java Socket, tuần tự hóa.",
+      "yeu_cau": "Video 5 đến 10 phút. Chạy đồng thời máy chủ và máy khách trên màn hình.",
+      "han_nop": "2026-11-16 23:59:00+07",
+      "phut_toi_thieu": 5,
+      "thu_tu": 5
+    },
+    {
+      "ma": "BTL",
+      "ten": "Bài tập lớn - video demo sản phẩm",
+      "mo_ta": "Video demo bài tập lớn theo đề nhóm đã bốc, kèm giải thích kiến trúc và phần mã do chính em viết.",
+      "yeu_cau": "Video 10 đến 15 phút. Mở đầu nêu số đề và danh sách nhóm. Mỗi thành viên nói phần mình làm. Có đoạn chạy thật, không cắt ghép che lỗi.",
+      "han_nop": "2026-12-07 23:59:00+07",
+      "phut_toi_thieu": 10,
+      "thu_tu": 6
+    }
+  ]
+}
