@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server'
 import { taoWorkbookDot } from '@/lib/excel'
 import { laGiangVien } from '@/lib/phien-gv'
-import { bangCham, dotNopTheoId, lopHienTai } from '@/lib/truy-van'
+import { bangCham, dotNopTheoId, lopTheoId } from '@/lib/truy-van'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -11,8 +11,11 @@ export async function GET(req: NextRequest) {
   if (!(await laGiangVien())) return new Response('Chưa đăng nhập.', { status: 401 })
 
   const dotId = req.nextUrl.searchParams.get('dot') ?? ''
-  const [dot, lop] = await Promise.all([dotNopTheoId(dotId), lopHienTai()])
-  if (!dot || !lop) return new Response('Không tìm thấy đợt nộp.', { status: 404 })
+  const dot = await dotNopTheoId(dotId)
+  if (!dot) return new Response('Không tìm thấy đợt nộp.', { status: 404 })
+
+  const lop = await lopTheoId(dot.lop_id)
+  if (!lop) return new Response('Không tìm thấy lớp học phần của đợt.', { status: 404 })
 
   const ds = await bangCham(dot.id, dot.lop_id)
   const buffer = await taoWorkbookDot({ lop, dot, ds })

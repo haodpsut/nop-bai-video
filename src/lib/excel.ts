@@ -1,6 +1,6 @@
 import 'server-only'
 import ExcelJS from 'exceljs'
-import type { DongCham, DotNop, Lop } from './kieu'
+import type { DongCham, DotNop, LopHocPhan } from './kieu'
 import { gioPhutNgay } from './thoi-gian'
 
 const XANH = 'FF1F5F5B'
@@ -25,7 +25,7 @@ const TEN_TRANG_THAI: Record<string, string> = {
  * và được tô đỏ nhạt, để in ra là điểm danh được ngay.
  */
 export async function taoWorkbookDot(opts: {
-  lop: Lop
+  lop: LopHocPhan
   dot: DotNop
   ds: DongCham[]
 }): Promise<ExcelJS.Buffer> {
@@ -51,7 +51,9 @@ export async function taoWorkbookDot(opts: {
   ]
 
   ws.mergeCells('A1:I1')
-  ws.getCell('A1').value = `${lop.ten_hoc_phan} (${lop.ma_hoc_phan}) - lớp ${lop.ma}`
+  ws.getCell('A1').value =
+    `${lop.ten_hoc_phan} (${lop.ma_hoc_phan}) - lớp học phần ${lop.ma}` +
+    (lop.lop_sinh_hoat ? ` - lớp ${lop.lop_sinh_hoat}` : '')
   ws.getCell('A1').font = { bold: true, size: 13, color: { argb: XANH } }
 
   ws.mergeCells('A2:I2')

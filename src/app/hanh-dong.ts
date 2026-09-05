@@ -5,7 +5,7 @@ import { revalidatePath } from 'next/cache'
 import { db } from '@/lib/supabase'
 import { bocLink } from '@/lib/link-video'
 import { daQuaHan } from '@/lib/thoi-gian'
-import { dotNopTheoId, timSinhVienTheoMa } from '@/lib/truy-van'
+import { coGhiDanh, dotNopTheoId, timSinhVienTheoMa } from '@/lib/truy-van'
 import type { BaiNop } from '@/lib/kieu'
 import { COOKIE_SV } from '@/lib/hang-so'
 
@@ -26,9 +26,8 @@ export async function xacNhanSinhVien(_truoc: KetQua, form: FormData): Promise<K
   if (!sv)
     return {
       ok: false,
-      loi: `Mã ${ma} không có trong danh sách lớp. Kiểm tra lại, nếu vẫn không được thì nhắn giảng viên để bổ sung.`,
+      loi: `Mã ${ma} không có trong danh sách lớp nào. Kiểm tra lại, nếu vẫn không được thì nhắn giảng viên để bổ sung.`,
     }
-  if (!sv.dang_hoc) return { ok: false, loi: 'Mã này đã được đánh dấu thôi học ở lớp học phần.' }
 
   const kho = await cookies()
   kho.set(COOKIE_SV, sv.ma_sv, {
@@ -54,12 +53,16 @@ export async function nopBai(_truoc: KetQua, form: FormData): Promise<KetQua> {
   if (!maSv) return { ok: false, loi: 'Phiên đã hết. Nhập lại mã sinh viên rồi nộp.' }
 
   const sv = await timSinhVienTheoMa(maSv)
-  if (!sv || !sv.dang_hoc)
-    return { ok: false, loi: 'Không tìm thấy mã sinh viên này trong danh sách lớp.' }
+  if (!sv) return { ok: false, loi: 'Không tìm thấy mã sinh viên này.' }
 
   const dotId = String(form.get('dot_id') ?? '')
   const dot = await dotNopTheoId(dotId)
-  if (!dot || dot.lop_id !== sv.lop_id) return { ok: false, loi: 'Đợt nộp không tồn tại.' }
+  if (!dot) return { ok: false, loi: 'Đợt nộp không tồn tại.' }
+
+  // Chặn nộp chéo sang lớp học phần mình không học: id đợt nằm ngay trên URL
+  // nên không thể tin form gửi lên.
+  if (!(await coGhiDanh(sv.id, dot.lop_id)))
+    return { ok: false, loi: 'Em không có tên trong lớp học phần của đợt này.' }
   if (!dot.dang_mo) return { ok: false, loi: `Đợt ${dot.ma} đã đóng, không nhận thêm bài.` }
 
   const quaHan = daQuaHan(dot.han_nop)

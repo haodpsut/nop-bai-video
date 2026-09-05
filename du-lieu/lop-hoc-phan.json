@@ -1,0 +1,15 @@
+{
+  "_ghi_chu": "Danh sách lớp học phần nạp sẵn. Thêm học phần mới thì thêm một mục ở đây, kèm file danh sách và file đợt nộp tương ứng, rồi chạy: npm run seed:gen",
+  "lop": [
+    {
+      "ma": "AJP20101",
+      "ma_hoc_phan": "AJP201",
+      "ten_hoc_phan": "Lập trình Java nâng cao",
+      "lop_sinh_hoat": "24CT1",
+      "hoc_ky": "HK1 - 2026-2027",
+      "giang_vien": "TS. Đỗ Phúc Hảo",
+      "danh_sach": "danh-sach-24CT1.json",
+      "dot_nop": "dot-nop-AJP201.json"
+    }
+  ]
+}

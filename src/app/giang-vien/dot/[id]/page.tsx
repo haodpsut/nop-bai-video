@@ -7,7 +7,7 @@ import { DangNhapGiangVien } from '@/components/dang-nhap-gv'
 import { DongChamBai } from '@/components/dong-cham'
 import { FormDot } from '@/components/form-dot'
 import { laGiangVien } from '@/lib/phien-gv'
-import { bangCham, dotNopTheoId, lopHienTai, trungVideoTrongDot } from '@/lib/truy-van'
+import { bangCham, dotNopTheoId, lopTheoId, trungVideoTrongDot } from '@/lib/truy-van'
 import { conLai, gioPhutNgay } from '@/lib/thoi-gian'
 import type { DongCham } from '@/lib/kieu'
 
@@ -54,8 +54,11 @@ export default async function TrangDot({
   const { id } = await params
   const { loc: locChon = 'tat-ca' } = await searchParams
 
-  const [dot, lop] = await Promise.all([dotNopTheoId(id), lopHienTai()])
-  if (!dot || !lop) notFound()
+  const dot = await dotNopTheoId(id)
+  if (!dot) notFound()
+
+  const lop = await lopTheoId(dot.lop_id)
+  if (!lop) notFound()
 
   const [ds, trung] = await Promise.all([bangCham(dot.id, dot.lop_id), trungVideoTrongDot(dot.id)])
 
@@ -68,11 +71,14 @@ export default async function TrangDot({
   const hienThi = loc(ds, locChon)
 
   return (
-    <Khung tieu_de="Chấm bài video" phu={`${dot.ma} - lớp ${lop.ma}`} rong>
+    <Khung tieu_de="Chấm bài" phu={`${lop.ten_hoc_phan} - ${dot.ma}`} rong>
       <div className="flex flex-col gap-5">
         <div>
-          <Link href="/giang-vien" className="text-[12.5px] text-muc-nhat underline underline-offset-2">
-            Về bảng điều khiển
+          <Link
+            href={`/giang-vien/lop/${encodeURIComponent(lop.ma)}`}
+            className="text-[12.5px] text-muc-nhat underline underline-offset-2"
+          >
+            Về lớp {lop.ten_hoc_phan}
           </Link>
           <div className="mt-1 flex flex-wrap items-center gap-2">
             <h1 className="text-[19px] font-semibold leading-tight">{dot.ten}</h1>
@@ -141,7 +147,7 @@ export default async function TrangDot({
           <TieuDeMuc phu="Đổi hạn nộp, đóng hoặc mở lại đợt, sửa yêu cầu video.">
             Thiết lập đợt
           </TieuDeMuc>
-          <FormDot dot={dot} />
+          <FormDot lop_id={lop.id} dot={dot} />
         </section>
       </div>
     </Khung>

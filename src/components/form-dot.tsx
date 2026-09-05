@@ -9,7 +9,15 @@ import { HopBao, Nhan, Nut, OChu, VungChu } from './dieu-khien'
 const DAU: KetQuaGv = { ok: false }
 
 /** Dùng chung cho tạo đợt mới và sửa đợt đang có. */
-export function FormDot({ dot, mo_san }: { dot?: DotNop; mo_san?: boolean }) {
+export function FormDot({
+  lop_id,
+  dot,
+  mo_san,
+}: {
+  lop_id: string
+  dot?: DotNop
+  mo_san?: boolean
+}) {
   const [ketQua, chay, dangChay] = useActionState(luuDot, DAU)
   const [mo, datMo] = useState(Boolean(mo_san))
 
@@ -22,6 +30,9 @@ export function FormDot({ dot, mo_san }: { dot?: DotNop; mo_san?: boolean }) {
 
   return (
     <form action={chay} className="flex flex-col gap-3">
+      {/* Đợt luôn thuộc về một lớp học phần; máy chủ vẫn kiểm lại lớp này có
+          thật không chứ không tin thẳng ô ẩn. */}
+      <input type="hidden" name="lop_id" value={lop_id} />
       {dot && <input type="hidden" name="id" value={dot.id} />}
 
       <div className="grid gap-3 sm:grid-cols-[120px_1fr_110px]">

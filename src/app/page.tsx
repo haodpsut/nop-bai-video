@@ -7,9 +7,9 @@ import { NhapMaSinhVien } from '@/components/nhap-ma-sv'
 import { ONopBai } from '@/components/o-nop-bai'
 import { doiSinhVien } from './hanh-dong'
 import { COOKIE_SV } from '@/lib/hang-so'
-import { baiNopCuaSinhVien, dsDotNop, lopHienTai, timSinhVienTheoMa } from '@/lib/truy-van'
+import { bangCuaSinhVien, dsLopHocPhan, timSinhVienTheoMa } from '@/lib/truy-van'
 import { conLai, daQuaHan, gioPhutNgay } from '@/lib/thoi-gian'
-import type { BaiNop, DotNop } from '@/lib/kieu'
+import type { BaiNop, DotNop, LopCuaSinhVien } from '@/lib/kieu'
 
 const TEN_TRANG_THAI: Record<string, string> = {
   cho_cham: 'Chờ chấm',
@@ -18,34 +18,32 @@ const TEN_TRANG_THAI: Record<string, string> = {
 }
 
 export default async function Trang() {
-  const lop = await lopHienTai()
-  if (!lop)
-    return (
-      <Khung tieu_de="Nộp link video bài tập">
-        <Trong>
-          Chưa có dữ liệu lớp. Chạy <code>npm run db:reset</code> để nạp danh sách lớp và các đợt
-          nộp.
-        </Trong>
-      </Khung>
-    )
-
   const kho = await cookies()
   const maSv = kho.get(COOKIE_SV)?.value
   const sv = maSv ? await timSinhVienTheoMa(maSv) : null
 
-  const tieuDe = `${lop.ten_hoc_phan} - ${lop.ma}`
-
-  if (!sv)
+  if (!sv) {
+    const lop = await dsLopHocPhan()
+    const dangMo = lop.filter((l) => l.dang_hoat_dong)
     return (
-      <Khung tieu_de="Nộp link video bài tập" phu={tieuDe}>
+      <Khung tieu_de="Nộp link video bài tập" phu="Khoa Công nghệ thông tin">
         <div className="flex flex-col gap-4">
           <The>
             <h1 className="text-[17px] font-semibold">Nộp link video bài tập</h1>
             <p className="mt-1 text-[13.5px] leading-relaxed text-muc-nhat">
-              {lop.ten_hoc_phan} ({lop.ma_hoc_phan}) - lớp {lop.ma}
-              {lop.hoc_ky ? `, ${lop.hoc_ky}` : ''}. Nhập mã sinh viên để xem các đợt phải nộp và
-              dán link video của em.
+              Nhập mã sinh viên để xem các đợt phải nộp và dán link video của em. Một mã dùng cho
+              mọi học phần có mặt ở đây.
             </p>
+            {dangMo.length > 0 && (
+              <ul className="mt-3 flex flex-col gap-1 text-[13px] text-muc-nhat">
+                {dangMo.map((l) => (
+                  <li key={l.id}>
+                    <span className="so text-[12px] text-muc-mo">{l.ma}</span> {l.ten_hoc_phan}
+                    {l.lop_sinh_hoat ? ` - lớp ${l.lop_sinh_hoat}` : ''}
+                  </li>
+                ))}
+              </ul>
+            )}
           </The>
           <NhapMaSinhVien />
           <p className="text-center text-[12px] text-muc-mo">
@@ -56,13 +54,16 @@ export default async function Trang() {
         </div>
       </Khung>
     )
+  }
 
-  const [dsDot, dsBai] = await Promise.all([dsDotNop(sv.lop_id), baiNopCuaSinhVien(sv.id)])
-  const theoDot = new Map(dsBai.map((b) => [b.dot_id, b]))
-  const conThieu = dsDot.filter((d) => d.dang_mo && !theoDot.has(d.id)).length
+  const bang = await bangCuaSinhVien(sv.id)
+  const conThieu = bang.reduce(
+    (t, l) => t + l.dot.filter((d) => d.dang_mo && !l.bai.has(d.id)).length,
+    0
+  )
 
   return (
-    <Khung tieu_de="Nộp link video bài tập" phu={tieuDe}>
+    <Khung tieu_de="Nộp link video bài tập" phu={sv.ho_ten}>
       <div className="flex flex-col gap-4">
         <The>
           <div className="flex flex-wrap items-start justify-between gap-3">
@@ -70,8 +71,8 @@ export default async function Trang() {
               <div className="nhan-chu">Sinh viên</div>
               <h1 className="text-[17px] font-semibold leading-tight">{sv.ho_ten}</h1>
               <p className="mt-0.5 text-[13px] text-muc-nhat">
-                <span className="so">{sv.ma_sv}</span> - lớp {lop.ma}
-                {sv.nhom ? ` - nhóm ${sv.nhom}` : ''}
+                <span className="so">{sv.ma_sv}</span>
+                {bang.length > 0 && ` - đang học ${bang.length} học phần ở đây`}
               </p>
             </div>
             <form action={doiSinhVien}>
@@ -87,13 +88,41 @@ export default async function Trang() {
           </p>
         </The>
 
-        {dsDot.length === 0 && <Trong>Giảng viên chưa mở đợt nộp nào.</Trong>}
+        {bang.length === 0 && (
+          <Trong>
+            Mã của em có trong hệ thống nhưng chưa được ghi danh vào học phần nào. Nhắn giảng viên
+            để thêm vào lớp.
+          </Trong>
+        )}
 
-        {dsDot.map((dot) => (
-          <TheDot key={dot.id} dot={dot} bai={theoDot.get(dot.id) ?? null} />
+        {bang.map((l) => (
+          <MucLop key={l.lop.id} muc={l} />
         ))}
       </div>
     </Khung>
+  )
+}
+
+function MucLop({ muc }: { muc: LopCuaSinhVien }) {
+  const { lop, nhom, dot, bai } = muc
+  return (
+    <section className="flex flex-col gap-3">
+      {/* Tiêu đề học phần, để em học nhiều môn không nộp nhầm đợt của môn khác. */}
+      <div className="border-b border-vien pb-1.5">
+        <div className="nhan-chu">
+          <span className="so">{lop.ma_hoc_phan}</span>
+          {lop.lop_sinh_hoat ? ` - lớp ${lop.lop_sinh_hoat}` : ''}
+          {nhom ? ` - nhóm ${nhom}` : ''}
+        </div>
+        <h2 className="text-[16px] font-semibold leading-tight">{lop.ten_hoc_phan}</h2>
+      </div>
+
+      {dot.length === 0 && <Trong>Học phần này chưa mở đợt nộp nào.</Trong>}
+
+      {dot.map((d) => (
+        <TheDot key={d.id} dot={d} bai={bai.get(d.id) ?? null} />
+      ))}
+    </section>
   )
 }
 
@@ -119,7 +148,7 @@ function TheDot({ dot, bai }: { dot: DotNop; bai: BaiNop | null }) {
         {bai && bai.trang_thai === 'dat' && <Huy sac="on">Đạt {bai.diem ?? ''}</Huy>}
         {bai && bai.trang_thai === 'can_sua_lai' && <Huy sac="nghiem_trong">Cần làm lại</Huy>}
       </div>
-      <h2 className="mt-1 text-[15.5px] font-semibold leading-tight">{dot.ten}</h2>
+      <h3 className="mt-1 text-[15.5px] font-semibold leading-tight">{dot.ten}</h3>
 
       {dot.mo_ta && <p className="mt-2 text-[13.5px] leading-relaxed text-muc-nhat">{dot.mo_ta}</p>}
       {dot.yeu_cau && (
