@@ -153,24 +153,30 @@ export async function baiNopCuaSinhVien(sinhVienId: string): Promise<BaiNop[]> {
  * đó, và bài em đã nộp. Gom về một hàm để trang không phải tự ghép.
  */
 export async function bangCuaSinhVien(sinhVienId: string): Promise<LopCuaSinhVien[]> {
-  const dsLop = await lopDangHocCuaSinhVien(sinhVienId)
-  if (dsLop.length === 0) return []
-
-  const [dot, bai] = await Promise.all([
-    lay<DotNop[]>(
-      'đợt nộp của các lớp',
+  /*
+   * Ba truy vấn chạy song song, không chờ nhau.
+   *
+   * Bản chạy thật đặt hàm ở một châu lục còn cơ sở dữ liệu ở châu lục khác, nên
+   * mỗi vòng hỏi đáp tốn cả trăm mili giây. Trước đây phải biết danh sách lớp
+   * rồi mới hỏi được đợt nộp, thành hai vòng nối đuôi. Giờ lấy luôn đợt của mọi
+   * lớp đang dạy rồi lọc trong bộ nhớ: một giảng viên chỉ có vài lớp nên số
+   * dòng thừa không đáng kể, mà tiết kiệm hẳn một vòng.
+   */
+  const [dsLop, dot, bai] = await Promise.all([
+    lopDangHocCuaSinhVien(sinhVienId),
+    lay<Array<DotNop & { lop_hoc_phan?: unknown }>>(
+      'đợt nộp của các lớp đang dạy',
       db()
         .from('dot_nop')
-        .select('*')
-        .in(
-          'lop_id',
-          dsLop.map((x) => x.lop.id)
-        )
+        .select('*, lop_hoc_phan!inner(dang_hoat_dong)')
+        .eq('lop_hoc_phan.dang_hoat_dong', true)
         .order('thu_tu')
         .order('han_nop')
     ),
     baiNopCuaSinhVien(sinhVienId),
   ])
+
+  if (dsLop.length === 0) return []
 
   const theoDot = new Map(bai.map((b) => [b.dot_id, b]))
   return dsLop.map(({ lop, nhom }) => {
