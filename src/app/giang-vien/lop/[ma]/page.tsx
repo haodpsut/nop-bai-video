@@ -29,7 +29,7 @@ export default async function TrangLop({ params }: { params: Promise<{ ma: strin
   const dangMo = ds.filter((d) => d.dang_mo).length
 
   return (
-    <Khung tieu_de={lop.ten_hoc_phan} phu={`${lop.ma}${lop.lop_sinh_hoat ? ' - lớp ' + lop.lop_sinh_hoat : ''}`} rong>
+    <Khung tieu_de={lop.ten_hoc_phan} phu={`${lop.ma}${lop.lop_sinh_hoat ? ' - lớp ' + lop.lop_sinh_hoat : ''}`}>
       <div className="flex flex-col gap-5">
         <div>
           <Link href="/giang-vien" className="text-[12.5px] text-muc-nhat underline underline-offset-2">

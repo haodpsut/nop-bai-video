@@ -27,7 +27,6 @@ export const metadata: Metadata = {
   title: 'Nộp link video bài tập | Lập trình Java nâng cao',
   description:
     'Nơi sinh viên nộp link video YouTube hoặc TikTok cho bài tập học phần Lập trình Java nâng cao.',
-  icons: { icon: '/favicon.svg' },
 }
 
 /** Đặt chủ đề trước khi trang vẽ để không nháy nền. */

@@ -27,7 +27,10 @@ export default async function Trang() {
     const dangMo = lop.filter((l) => l.dang_hoat_dong)
     return (
       <Khung tieu_de="Nộp link video bài tập" phu="Khoa Công nghệ thông tin">
-        <div className="flex flex-col gap-4">
+        {/* Màn rộng thì xếp hai thẻ cạnh nhau, điện thoại thì một cột. Khung
+            trang rộng bằng trang giảng viên nên nếu để một cột thì bên phải
+            trống hoác. */}
+        <div className="grid items-start gap-4 lg:grid-cols-2">
           <The>
             <h1 className="text-[17px] font-semibold">Nộp link video bài tập</h1>
             <p className="mt-1 text-[13.5px] leading-relaxed text-muc-nhat">
@@ -46,7 +49,7 @@ export default async function Trang() {
             )}
           </The>
           <NhapMaSinhVien />
-          <p className="text-center text-[12px] text-muc-mo">
+          <p className="text-center text-[12px] text-muc-mo lg:col-span-2">
             <Link href="/giang-vien" className="text-muc-nhat underline underline-offset-2">
               Trang giảng viên
             </Link>
@@ -119,9 +122,13 @@ function MucLop({ muc }: { muc: LopCuaSinhVien }) {
 
       {dot.length === 0 && <Trong>Học phần này chưa mở đợt nộp nào.</Trong>}
 
-      {dot.map((d) => (
-        <TheDot key={d.id} dot={d} bai={bai.get(d.id) ?? null} />
-      ))}
+      {/* Hai cột trên màn rộng: một cột thì thẻ bị kéo dài ra 1280px, ô nhập
+          link dài cả gang tay mà chữ vẫn nằm bên trái. */}
+      <div className="grid items-start gap-3 lg:grid-cols-2">
+        {dot.map((d) => (
+          <TheDot key={d.id} dot={d} bai={bai.get(d.id) ?? null} />
+        ))}
+      </div>
     </section>
   )
 }

@@ -56,14 +56,15 @@ export function Khung({
   children,
   tieu_de,
   phu,
-  rong,
 }: {
   children: ReactNode
   tieu_de: string
   phu?: string
-  rong?: boolean
 }) {
-  const be = rong ? 'max-w-[1280px]' : 'max-w-[760px]'
+  /* Một bề ngang duy nhất cho mọi trang. Trước đây trang sinh viên hẹp hơn
+     trang giảng viên nên dải đầu trang và chân trang lệch hẳn nhau khi chuyển
+     qua lại, nhìn như hai website khác nhau. */
+  const be = 'max-w-[1280px]'
 
   return (
     <div className="flex min-h-dvh flex-col">

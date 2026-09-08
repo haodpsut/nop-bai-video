@@ -35,7 +35,7 @@ export default async function TrangGiangVien() {
   const tongSv = ds.reduce((t, l) => t + Number(l.tong_sv), 0)
 
   return (
-    <Khung tieu_de="Trang giảng viên" phu="Tất cả học phần" rong>
+    <Khung tieu_de="Trang giảng viên" phu="Tất cả học phần">
       <div className="flex flex-col gap-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>

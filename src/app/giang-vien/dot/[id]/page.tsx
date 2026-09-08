@@ -71,7 +71,7 @@ export default async function TrangDot({
   const hienThi = loc(ds, locChon)
 
   return (
-    <Khung tieu_de="Chấm bài" phu={`${lop.ten_hoc_phan} - ${dot.ma}`} rong>
+    <Khung tieu_de="Chấm bài" phu={`${lop.ten_hoc_phan} - ${dot.ma}`}>
       <div className="flex flex-col gap-5">
         <div>
           <Link
