@@ -1,11 +1,17 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState, type ReactNode } from 'react'
 
 /* Khung ngoài dùng chung cho cả trang sinh viên lẫn trang giảng viên.
-   Sinh viên phần lớn mở bằng điện thoại nên bố cục là một cột, không có
-   thanh điều hướng bên. */
+
+   Nhận diện theo bộ màu của Trường Đại học Kiến trúc Đà Nẵng: dải đầu trang
+   maroon với gạch vàng bên dưới, chân trang navy, giống trang sách tương tác
+   OOP và TTNT để sinh viên nhìn là biết cùng một nơi.
+
+   Sinh viên phần lớn mở bằng điện thoại nên bố cục là một cột, không có thanh
+   điều hướng bên. */
 
 function NutChuDe() {
   const [che_do, dat] = useState<'sang' | 'toi' | null>(null)
@@ -28,7 +34,9 @@ function NutChuDe() {
       type="button"
       onClick={doi}
       aria-label={che_do === 'toi' ? 'Chuyển sang nền sáng' : 'Chuyển sang nền tối'}
-      className="grid size-8 place-items-center rounded-md border border-vien bg-noi text-muc-nhat transition-colors hover:text-muc"
+      /* Nút nằm trên dải maroon nên dùng token màu chữ dành riêng cho nền đó,
+         không dùng biến màu chữ thường vì nền ở đây không đổi theo sáng tối. */
+      className="grid size-8 place-items-center rounded-md border border-tren-nhan-phu/50 text-tren-nhan-phu transition-colors hover:border-tren-nhan-phu hover:text-white"
     >
       {che_do === 'toi' ? (
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4">
@@ -55,22 +63,26 @@ export function Khung({
   phu?: string
   rong?: boolean
 }) {
+  const be = rong ? 'max-w-[1280px]' : 'max-w-[760px]'
+
   return (
     <div className="flex min-h-dvh flex-col">
-      <header className="an-khi-in sticky top-0 z-20 border-b border-vien bg-nen/85 backdrop-blur">
-        <div
-          className={`mx-auto flex items-center gap-3 px-4 py-2.5 ${rong ? 'max-w-[1280px]' : 'max-w-[760px]'}`}
-        >
+      <header className="an-khi-in sticky top-0 z-20 border-b-[3px] border-vang bg-nhan-dac">
+        <div className={`mx-auto flex items-center gap-3 px-4 py-2.5 ${be}`}>
           <Link href="/" className="flex items-center gap-2.5 no-underline">
-            <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden>
-              <rect x="1.5" y="4" width="21" height="16" rx="3" fill="var(--nhan)" />
-              <path d="M10 9.2v5.6l4.8-2.8z" fill="var(--nen-noi)" />
-            </svg>
+            <Image
+              src="/dau-logo.png"
+              alt="Trường Đại học Kiến trúc Đà Nẵng"
+              width={34}
+              height={34}
+              className="rounded-[3px] bg-white/95 p-[3px]"
+              priority
+            />
             <span className="leading-tight">
-              <span className="block font-[family-name:var(--font-tieu-de)] text-[14.5px] font-semibold text-muc">
+              <span className="block font-[family-name:var(--font-tieu-de)] text-[14.5px] font-semibold text-white">
                 {tieu_de}
               </span>
-              {phu && <span className="block text-[10.5px] tracking-wide text-muc-mo">{phu}</span>}
+              {phu && <span className="block text-[10.5px] tracking-wide text-tren-nhan-phu">{phu}</span>}
             </span>
           </Link>
           <div className="ml-auto flex items-center gap-2">
@@ -79,14 +91,14 @@ export function Khung({
         </div>
       </header>
 
-      <main
-        className={`vung-in mx-auto w-full flex-1 px-4 py-5 ${rong ? 'max-w-[1280px]' : 'max-w-[760px]'}`}
-      >
-        {children}
-      </main>
+      <main className={`vung-in mx-auto w-full flex-1 px-4 py-5 ${be}`}>{children}</main>
 
-      <footer className="an-khi-in border-t border-vien px-4 py-4 text-center text-[11.5px] text-muc-mo">
-        Nộp link video bài tập - Khoa Công nghệ thông tin, Trường Đại học Kiến trúc Đà Nẵng
+      <footer className="an-khi-in bg-navy px-4 py-5 text-center text-[11.5px] leading-relaxed text-tren-navy-phu">
+        <div className={`mx-auto ${be}`}>
+          <span className="text-white">Trường Đại học Kiến trúc Đà Nẵng</span>
+          <br />
+          Khoa Công nghệ thông tin - hệ thống nộp link video bài tập
+        </div>
       </footer>
     </div>
   )

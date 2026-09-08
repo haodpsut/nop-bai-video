@@ -3,11 +3,13 @@ import ExcelJS from 'exceljs'
 import type { DongCham, DotNop, LopHocPhan } from './kieu'
 import { gioPhutNgay } from './thoi-gian'
 
-const XANH = 'FF1F5F5B'
-const RAY = 'FFEDF1ED'
-const VIEN = 'FFD2D9D2'
-const DO_NHAT = 'FFF6E4E1'
-const VANG_NHAT = 'FFF4ECD8'
+/* Màu theo bộ nhận diện của trường: maroon cho tiêu đề, vàng nhạt cho dòng
+   nộp trễ, đỏ nhạt cho người chưa nộp. */
+const MAROON = 'FF990000'
+const RAY = 'FFF4F0ED'
+const VIEN = 'FFDED5D1'
+const DO_NHAT = 'FFFBE6E4'
+const VANG_NHAT = 'FFFDF1DC'
 
 function vien(): Partial<ExcelJS.Borders> {
   const b: Partial<ExcelJS.Border> = { style: 'thin', color: { argb: VIEN } }
@@ -54,7 +56,7 @@ export async function taoWorkbookDot(opts: {
   ws.getCell('A1').value =
     `${lop.ten_hoc_phan} (${lop.ma_hoc_phan}) - lớp học phần ${lop.ma}` +
     (lop.lop_sinh_hoat ? ` - lớp ${lop.lop_sinh_hoat}` : '')
-  ws.getCell('A1').font = { bold: true, size: 13, color: { argb: XANH } }
+  ws.getCell('A1').font = { bold: true, size: 13, color: { argb: MAROON } }
 
   ws.mergeCells('A2:I2')
   ws.getCell('A2').value = `${dot.ma} - ${dot.ten}`
@@ -108,7 +110,7 @@ export async function taoWorkbookDot(opts: {
     if (b) {
       const o = r.getCell(6)
       o.value = { text: b.url_chuan, hyperlink: b.url_chuan }
-      o.font = { size: 10, color: { argb: XANH }, underline: true }
+      o.font = { size: 10, color: { argb: MAROON }, underline: true }
     }
   })
 

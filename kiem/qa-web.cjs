@@ -203,10 +203,26 @@ async function trangSinhVien(browser, maSv, { sang = true } = {}) {
   }
   fs.mkdirSync(RA, { recursive: true })
 
+  // --- Dọn dấu vết của lần chạy trước ------------------------------------
+  // Bộ kiểm phải tự đưa dữ liệu về mốc biết trước, không trông chờ người chạy
+  // nhớ gõ db:reset. Quên một lần là hàng loạt mục trượt oan vì bài nộp cũ.
+  await db('lich_su_nop?id=gt.0', { method: 'DELETE' })
+  await db('bai_nop?nen_tang=in.(youtube,tiktok)', { method: 'DELETE' })
+  await db('lop_hoc_phan?ma=eq.AIT30102', { method: 'DELETE' })
+  await db('sinh_vien?ma_sv=in.(2451990001,2451990002)', { method: 'DELETE' })
+  await db('ghi_danh?dang_hoc=is.false', { method: 'PATCH', body: JSON.stringify({ dang_hoc: true }) })
+  await db('dot_nop?ma=eq.LAB01', {
+    method: 'PATCH',
+    body: JSON.stringify({ dang_mo: true, cho_nop_tre: true }),
+  })
+
   // Dựng sẵn hai tình huống không có trong dữ liệu gốc: một đợt đã quá hạn
   // nhưng còn nhận bài, và một đợt đã đóng.
   const homQua = new Date(Date.now() - 36 * 3600 * 1000).toISOString()
-  await db('dot_nop?ma=eq.LAB05', { method: 'PATCH', body: JSON.stringify({ han_nop: homQua }) })
+  await db('dot_nop?ma=eq.LAB05', {
+    method: 'PATCH',
+    body: JSON.stringify({ han_nop: homQua, dang_mo: true, cho_nop_tre: true }),
+  })
   await db('dot_nop?ma=eq.BTL', { method: 'PATCH', body: JSON.stringify({ dang_mo: false }) })
 
   const browser = await puppeteer.launch({
@@ -507,17 +523,100 @@ async function trangSinhVien(browser, maSv, { sang = true } = {}) {
   await db(`ghi_danh?sinh_vien_id=eq.${svId}`, { method: 'PATCH', body: JSON.stringify({ dang_hoc: true }) })
 
   // =========================================================================
-  phan('F. Giao diện ở nền tối')
+  phan('F. Màu và tương phản')
   // =========================================================================
-  const toi = await browser.newPage()
-  await toi.emulateMediaFeatures([{ name: 'prefers-color-scheme', value: 'dark' }])
-  await toi.setViewport({ width: 390, height: 844, deviceScaleFactor: 2 })
-  await toi.goto(GOC, { waitUntil: 'networkidle0' })
-  const nenToi = await toi.evaluate(() => getComputedStyle(document.body).backgroundColor)
-  const so = (m) => m.slice(0, 3).reduce((t, x) => t + Number(x), 0)
-  const rgbToi = nenToi.match(/\d+/g)
-  nhan('nền tối thật sự tối', rgbToi && so(rgbToi) < 200, 'nền = ' + nenToi)
-  await chup(toi, '19-nen-toi')
+  for (const cheDo of ['light', 'dark']) {
+    const t = await browser.newPage()
+    await t.emulateMediaFeatures([{ name: 'prefers-color-scheme', value: cheDo }])
+    await t.setViewport({ width: 390, height: 844, deviceScaleFactor: 2 })
+    await t.goto(GOC, { waitUntil: 'networkidle0' })
+
+    const mau = await t.evaluate(() => {
+      const g = getComputedStyle
+      /**
+       * Đổi mọi cách viết màu của CSS về [r, g, b, a].
+       *
+       * Không tự tách số trong chuỗi được: Tailwind sinh ra `oklab(0.99 ... / 0.7)`
+       * cho text-white/70, tách số thô sẽ ra 0.99 và bị hiểu thành gần đen, khiến
+       * phép đo báo oan 1,4:1 trong khi mắt nhìn rõ mồn một. Mượn canvas để trình
+       * duyệt tự quy đổi, rồi trộn phần trong suốt lên nền thật.
+       */
+      const oCanvas = document.createElement('canvas').getContext('2d')
+      const soHoa = (c) => {
+        // Canvas của Chrome chưa nhận oklab: gán không thành công thì fillStyle
+        // giữ nguyên giá trị cũ. Dùng hai màu mồi khác nhau để phát hiện việc
+        // đó, thay vì lặng lẽ coi màu không đọc được là đen rồi báo oan.
+        oCanvas.fillStyle = '#000000'
+        oCanvas.fillStyle = c
+        const thu1 = oCanvas.fillStyle
+        oCanvas.fillStyle = '#ffffff'
+        oCanvas.fillStyle = c
+        if (oCanvas.fillStyle !== thu1) return null
+        const v = oCanvas.fillStyle
+        if (v.startsWith('#')) {
+          const n = parseInt(v.slice(1), 16)
+          return [(n >> 16) & 255, (n >> 8) & 255, n & 255, 1]
+        }
+        const p = (v.match(/[\d.]+/g) || []).map(Number)
+        return [p[0], p[1], p[2], p[3] === undefined ? 1 : p[3]]
+      }
+      const tron = (truoc, sau) => {
+        const a = truoc[3]
+        return [0, 1, 2].map((i) => Math.round(truoc[i] * a + sau[i] * (1 - a)))
+      }
+      /** Nền thật sự của một phần tử: leo ngược lên tới tổ tiên đầu tiên có nền
+          không trong suốt, vì nền trong suốt thì mắt nhìn thấy nền của cha. */
+      const nenThat = (e) => {
+        for (let x = e; x; x = x.parentElement) {
+          const c = soHoa(g(x).backgroundColor)
+          if (!c) return null
+          if (c[3] > 0.95) return c.slice(0, 3)
+        }
+        return [255, 255, 255]
+      }
+      const kenh = (v) => {
+        const x = v / 255
+        return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4)
+      }
+      const sang = ([r, gg, b]) => 0.2126 * kenh(r) + 0.7152 * kenh(gg) + 0.0722 * kenh(b)
+      const tiLe = (a, b) => {
+        const [x, y] = [sang(a), sang(b)].sort((m, n) => n - m)
+        return (x + 0.05) / (y + 0.05)
+      }
+      const do_ = (ten, sel) => {
+        const e = document.querySelector(sel)
+        if (!e) return { ten, thieu: true }
+        const nen = nenThat(e)
+        const mauChu = soHoa(g(e).color)
+        if (!nen || !mauChu) return { ten, khong_doc_duoc: g(e).color }
+        const chu = tron(mauChu, nen)
+        return { ten, ti_le: Number(tiLe(chu, nen).toFixed(2)) }
+      }
+      return [
+        do_('tên trang trên dải maroon', 'header a span span'),
+        do_('chữ phụ trên dải maroon', 'header a span span + span'),
+        do_('chữ chân trang trên navy', 'footer div'),
+        do_('chữ nút chính', 'form button[type=submit]'),
+        do_('nhãn ô nhập', 'label'),
+        do_('chữ thân bài', 'main p'),
+        do_('nền toàn trang', 'body'),
+      ]
+    })
+
+    for (const m of mau) {
+      if (m.thieu || m.ten === 'nền toàn trang') continue
+      if (m.khong_doc_duoc) {
+        nhan(`${cheDo}: ${m.ten} đủ tương phản`, false, `không đọc được màu ${m.khong_doc_duoc}`)
+        continue
+      }
+      // 4,5:1 là ngưỡng AA cho chữ thường; chữ phụ nhỏ cũng phải đạt vì sinh
+      // viên đọc trên điện thoại ngoài trời.
+      nhan(`${cheDo}: ${m.ten} đủ tương phản`, m.ti_le >= 4.5, `đo được ${m.ti_le}:1`)
+    }
+
+    await t.screenshot({ path: path.join(RA, `19-mau-${cheDo}.png`), fullPage: true })
+    await t.close()
+  }
 
   await browser.close()
 

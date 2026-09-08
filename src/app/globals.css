@@ -1,85 +1,128 @@
 @import 'tailwindcss';
 
 /* =====================================================================
-   HỆ MÀU
-   Nền trung tính lệch nhẹ về xanh rêu, để cùng hệ với màu nhấn.
-   Màu ngữ nghĩa (ổn / cảnh báo / nghiêm trọng) tách khỏi màu nhấn.
+   HỆ MÀU - Trường Đại học Kiến trúc Đà Nẵng
+   Maroon #990000 và vàng #fbae40 lấy từ bộ nhận diện của trường, đúng bộ
+   đang dùng ở trang sách tương tác OOP và TTNT. Navy #0e2841 cho chân trang.
+   Nền là xám ấm để cùng hệ với maroon.
+
+   Mỗi màu nhấn có hai biến vì hai vai trò chữ và nền xung khắc nhau ở chế độ
+   tối; lý do và số đo tương phản ghi ngay tại chỗ khai báo.
    ===================================================================== */
 :root {
-  --nen: #f1f4f1;
+  --nen: #f7f4f2;
   --nen-noi: #ffffff;
-  --nen-chim: #e5eae5;
-  --nen-ray: #edf1ed;
-  --vien: #d2d9d2;
-  --vien-dam: #b6c0b6;
-  --muc: #141d1a;
-  --muc-nhat: #58655f;
-  --muc-mo: #8b968f;
+  --nen-chim: #efe9e6;
+  --nen-ray: #f4f0ed;
+  --vien: #ded5d1;
+  --vien-dam: #c2b5b0;
+  --muc: #1c1917;
+  --muc-nhat: #5c5350;
+  --muc-mo: #6f635e;
 
-  --nhan: #1f5f5b;
-  --nhan-sang: #2c8079;
-  --nhan-nen: #e0ebe8;
+  /* Maroon gánh HAI vai trò xung khắc, đúng như ghi chú trong custom.css của
+     trang sách tương tác: làm CHỮ thì cần đủ sẫm để đọc trên nền sáng, làm NỀN
+     cho chữ trắng thì cũng phải sẫm. Ở chế độ sáng hai vai trò trùng nhau nên
+     cùng #990000, nhưng chế độ tối thì tách hẳn: xem khối dark bên dưới. */
+  --nhan: #990000;
+  --nhan-sang: #b30000;
+  --nhan-dac: #990000;
+  --nhan-dac-day: #7a0000;
+  --nhan-nen: #f7e7e7;
+
+  /* Vàng thương hiệu đẹp khi làm NỀN hoặc VIỀN, nhưng làm CHỮ trên nền sáng chỉ
+     đạt 1,73:1. Biến riêng cho vai trò chữ giữ đúng sắc vàng mà sẫm lại, đo
+     được 5,03:1 trên nền trắng. */
+  --vang: #fbae40;
+  --vang-chu: #946726;
+  --vang-nen: #fdf1dc;
+
+  --navy: #0e2841;
+  /* Chữ nằm trên hai nền thương hiệu. Dùng màu thật chứ không dùng trắng nửa
+     trong suốt: trắng mờ trên maroon chỉ còn 2,1:1, mà lại còn không đo được
+     tự động vì trình duyệt trả về dạng oklab. */
+  --tren-nhan-phu: #f2d5d5;
+  --tren-navy-phu: #c9d4de;
 
   --on: #2f6b4c;
-  --on-nen: #e2ede5;
-  --canh-bao: #97690f;
-  --canh-bao-nen: #f4ecd8;
-  --nghiem-trong: #a5352a;
-  --nghiem-trong-nen: #f6e4e1;
+  --on-nen: #e3efe8;
+  --canh-bao: #946726;
+  --canh-bao-nen: #fdf1dc;
+  --nghiem-trong: #b3261e;
+  --nghiem-trong-nen: #fbe6e4;
 
-  --bong: 0 1px 2px rgb(20 29 26 / 0.06), 0 1px 1px rgb(20 29 26 / 0.04);
-  --bong-noi: 0 6px 24px -8px rgb(20 29 26 / 0.18);
+  --bong: 0 1px 2px rgb(28 25 23 / 0.06), 0 1px 1px rgb(28 25 23 / 0.04);
+  --bong-noi: 0 6px 24px -8px rgb(28 25 23 / 0.18);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --nen: #0e1412;
-    --nen-noi: #151d1a;
-    --nen-chim: #1b2522;
-    --nen-ray: #121a18;
-    --vien: #283330;
-    --vien-dam: #3a4744;
-    --muc: #e6ece9;
-    --muc-nhat: #94a29c;
-    --muc-mo: #6d7a75;
+    --nen: #14100f;
+    --nen-noi: #1d1817;
+    --nen-chim: #262020;
+    --nen-ray: #191413;
+    --vien: #362c2a;
+    --vien-dam: #4d403d;
+    --muc: #f0eae8;
+    --muc-nhat: #b3a6a2;
+    --muc-mo: #a4968f;
 
-    --nhan: #55b3a6;
-    --nhan-sang: #6ec9bb;
-    --nhan-nen: #16302c;
+    /* Trên nền tối, maroon #990000 làm CHỮ chỉ đạt 2,3:1 nên phải sáng lên,
+       nhưng chính màu sáng đó làm NỀN cho chữ trắng lại hỏng. Hai vai trò tách
+       hẳn ở đây. */
+    --nhan: #ff6b6b;
+    --nhan-sang: #ff8f8f;
+    --nhan-dac: #7a1010;
+    --nhan-dac-day: #941c1c;
+    --nhan-nen: #3a1616;
+
+    --vang: #fbae40;
+    --vang-chu: #fbae40;
+    --vang-nen: #35280f;
+
+    --navy: #0b1f33;
+    --tren-nhan-phu: #f2d5d5;
+    --tren-navy-phu: #c9d4de;
 
     --on: #5db489;
     --on-nen: #142b20;
-    --canh-bao: #d3a34a;
-    --canh-bao-nen: #2e2517;
-    --nghiem-trong: #e0715f;
-    --nghiem-trong-nen: #331a17;
+    --canh-bao: #fbae40;
+    --canh-bao-nen: #35280f;
+    --nghiem-trong: #ff8a7a;
+    --nghiem-trong-nen: #3b1a16;
 
-    --bong: 0 1px 2px rgb(0 0 0 / 0.4);
+    --bong: 0 1px 2px rgb(0 0 0 / 0.45);
     --bong-noi: 0 8px 28px -10px rgb(0 0 0 / 0.7);
   }
 }
 
 :root[data-theme='light'] {
-  --nen: #f1f4f1; --nen-noi: #ffffff; --nen-chim: #e5eae5; --nen-ray: #edf1ed;
-  --vien: #d2d9d2; --vien-dam: #b6c0b6;
-  --muc: #141d1a; --muc-nhat: #58655f; --muc-mo: #8b968f;
-  --nhan: #1f5f5b; --nhan-sang: #2c8079; --nhan-nen: #e0ebe8;
-  --on: #2f6b4c; --on-nen: #e2ede5;
-  --canh-bao: #97690f; --canh-bao-nen: #f4ecd8;
-  --nghiem-trong: #a5352a; --nghiem-trong-nen: #f6e4e1;
-  --bong: 0 1px 2px rgb(20 29 26 / 0.06), 0 1px 1px rgb(20 29 26 / 0.04);
-  --bong-noi: 0 6px 24px -8px rgb(20 29 26 / 0.18);
+  --nen: #f7f4f2; --nen-noi: #ffffff; --nen-chim: #efe9e6; --nen-ray: #f4f0ed;
+  --vien: #ded5d1; --vien-dam: #c2b5b0;
+  --muc: #1c1917; --muc-nhat: #5c5350; --muc-mo: #6f635e;
+  --nhan: #990000; --nhan-sang: #b30000;
+  --nhan-dac: #990000; --nhan-dac-day: #7a0000; --nhan-nen: #f7e7e7;
+  --vang: #fbae40; --vang-chu: #946726; --vang-nen: #fdf1dc;
+  --navy: #0e2841; --tren-nhan-phu: #f2d5d5; --tren-navy-phu: #c9d4de;
+  --on: #2f6b4c; --on-nen: #e3efe8;
+  --canh-bao: #946726; --canh-bao-nen: #fdf1dc;
+  --nghiem-trong: #b3261e; --nghiem-trong-nen: #fbe6e4;
+  --bong: 0 1px 2px rgb(28 25 23 / 0.06), 0 1px 1px rgb(28 25 23 / 0.04);
+  --bong-noi: 0 6px 24px -8px rgb(28 25 23 / 0.18);
 }
 
 :root[data-theme='dark'] {
-  --nen: #0e1412; --nen-noi: #151d1a; --nen-chim: #1b2522; --nen-ray: #121a18;
-  --vien: #283330; --vien-dam: #3a4744;
-  --muc: #e6ece9; --muc-nhat: #94a29c; --muc-mo: #6d7a75;
-  --nhan: #55b3a6; --nhan-sang: #6ec9bb; --nhan-nen: #16302c;
+  --nen: #14100f; --nen-noi: #1d1817; --nen-chim: #262020; --nen-ray: #191413;
+  --vien: #362c2a; --vien-dam: #4d403d;
+  --muc: #f0eae8; --muc-nhat: #b3a6a2; --muc-mo: #a4968f;
+  --nhan: #ff6b6b; --nhan-sang: #ff8f8f;
+  --nhan-dac: #7a1010; --nhan-dac-day: #941c1c; --nhan-nen: #3a1616;
+  --vang: #fbae40; --vang-chu: #fbae40; --vang-nen: #35280f;
+  --navy: #0b1f33; --tren-nhan-phu: #f2d5d5; --tren-navy-phu: #c9d4de;
   --on: #5db489; --on-nen: #142b20;
-  --canh-bao: #d3a34a; --canh-bao-nen: #2e2517;
-  --nghiem-trong: #e0715f; --nghiem-trong-nen: #331a17;
-  --bong: 0 1px 2px rgb(0 0 0 / 0.4);
+  --canh-bao: #fbae40; --canh-bao-nen: #35280f;
+  --nghiem-trong: #ff8a7a; --nghiem-trong-nen: #3b1a16;
+  --bong: 0 1px 2px rgb(0 0 0 / 0.45);
   --bong-noi: 0 8px 28px -10px rgb(0 0 0 / 0.7);
 }
 
@@ -95,7 +138,15 @@
   --color-muc-mo: var(--muc-mo);
   --color-nhan: var(--nhan);
   --color-nhan-sang: var(--nhan-sang);
+  --color-nhan-dac: var(--nhan-dac);
+  --color-nhan-dac-day: var(--nhan-dac-day);
   --color-nhan-nen: var(--nhan-nen);
+  --color-vang: var(--vang);
+  --color-vang-chu: var(--vang-chu);
+  --color-vang-nen: var(--vang-nen);
+  --color-navy: var(--navy);
+  --color-tren-nhan-phu: var(--tren-nhan-phu);
+  --color-tren-navy-phu: var(--tren-navy-phu);
   --color-on: var(--on);
   --color-on-nen: var(--on-nen);
   --color-canh-bao: var(--canh-bao);
@@ -111,7 +162,13 @@
 /* =====================================================================
    NỀN TẢNG
    ===================================================================== */
-* { border-color: var(--vien); }
+/* Đặt trong @layer base: CSS không nằm trong layer nào sẽ thắng mọi utility
+   của Tailwind (utility nằm trong layer), nên viết trần ở đây thì mọi lớp
+   border-* đều vô hiệu, ví dụ gạch vàng dưới dải đầu trang bị trả về màu viền
+   trung tính mà nhìn qua không thấy. */
+@layer base {
+  * { border-color: var(--vien); }
+}
 
 html { color-scheme: light dark; }
 :root[data-theme='light'] html, html[data-theme='light'] { color-scheme: light; }

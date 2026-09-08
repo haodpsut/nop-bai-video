@@ -34,7 +34,9 @@ export function Nhan({ children, cho }: { children: ReactNode; cho: string }) {
 type Dang = 'chinh' | 'phu' | 'nguy'
 
 const DANG: Record<Dang, string> = {
-  chinh: 'bg-nhan text-white border-transparent hover:bg-nhan-sang',
+  // Nút chính dùng biến NỀN (--nhan-dac) chứ không dùng biến CHỮ (--nhan):
+  // ở chế độ tối, biến chữ là maroon sáng, lấy làm nền thì chữ trắng đọc không nổi.
+  chinh: 'bg-nhan-dac text-white border-transparent hover:bg-nhan-dac-day',
   phu: 'bg-noi text-muc border-vien hover:bg-chim',
   nguy: 'bg-noi text-nghiem-trong border-vien hover:bg-nghiem-trong-nen',
 }
