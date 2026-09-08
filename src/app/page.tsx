@@ -164,6 +164,10 @@ function TheDot({ dot, bai }: { dot: DotNop; bai: BaiNop | null }) {
         {quaHan && dot.cho_nop_tre && !dong && ' - vẫn nhận bài nhưng ghi nhận là trễ.'}
       </p>
 
+      {/* Bọc trong một thẻ luôn tồn tại: nếu để khối này xuất hiện rồi biến mất
+          thì số phần tử con đổi, React ghép nhầm vị trí và dựng lại ô nộp bài,
+          làm mất luôn dòng xác nhận "Đã nhận bài" vừa hiện ra. */}
+      <div>
       {bai && (
         <div className="mt-3 rounded-md border border-vien bg-ray px-3 py-2.5">
           <div className="nhan-chu">Bài đã nộp</div>
@@ -189,6 +193,7 @@ function TheDot({ dot, bai }: { dot: DotNop; bai: BaiNop | null }) {
           )}
         </div>
       )}
+      </div>
 
       <div className="mt-3">
         {dong ? (

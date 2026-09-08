@@ -9,6 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "kiem": "node --experimental-strip-types kiem/kiem-link-video.ts && node --experimental-strip-types kiem/kiem-thoi-gian.ts && node --experimental-strip-types kiem/kiem-doc-danh-sach.ts",
+    "qa": "node kiem/qa-web.cjs",
     "doc:danh-sach": "node scripts/doc-danh-sach-xlsx.mjs",
     "seed:gen": "node scripts/sinh-seed.mjs",
     "db:start": "npx --yes supabase@latest start",
@@ -29,6 +30,7 @@
     "@types/node": "^22.10.5",
     "@types/react": "^19.0.7",
     "@types/react-dom": "^19.0.3",
+    "puppeteer-core": "^25.10.0",
     "tailwindcss": "^4.0.0",
     "typescript": "^5.7.3"
   }

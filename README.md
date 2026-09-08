@@ -212,13 +212,40 @@ trên SQL Editor.
 
 ```bash
 npm run kiem   # bóc link video, giờ Việt Nam, đọc danh sách dán vào
+npm run qa     # chạy thật cả web bằng Chrome không giao diện (cần dev đang chạy)
 npx tsc --noEmit
 npm run build
 ```
 
-`npm run kiem` là cổng thật, không phải để trang trí: cố tình làm hỏng biểu
-thức nhận mã video thì nó trượt và thoát mã 1, đã thử rồi khôi phục. Ba chỗ
-được kiểm là ba chỗ dễ sai nhất mà hỏng thì im lặng:
+`npm run qa` mở Chrome không giao diện, đi hết luồng của sinh viên rồi của
+giảng viên trên bản đang chạy, đối chiếu cả những gì ghi vào cơ sở dữ liệu, và
+chụp ảnh từng bước. Chạy như sau:
+
+```bash
+npm run db:reset   # đưa dữ liệu về trạng thái gốc
+npm run dev        # ở một cửa sổ khác
+npm run qa
+```
+
+Hiện có **48 phép kiểm**, gồm cả những thứ chỉ máy chủ mới chặn được: rút tên
+sinh viên khỏi lớp trong lúc em đang mở sẵn form, rồi kiểm xem bài có lọt vào
+bảng không. Đã thử làm hỏng thật: gỡ dòng kiểm ghi danh trong `nopBai` thì QA
+báo `so bai lot vao: 1` và thoát mã 1.
+
+Ba cái bẫy đã trả giá để biết, ghi trong đầu file `kiem/qa-web.cjs`:
+
+- Ảnh chụp phải ghi **ra ngoài thư mục dự án**. Ghi vào trong thì Next dev
+  tưởng mã nguồn đổi, biên dịch lại giữa chừng và giết request server action
+  đang bay: nút nộp kẹt ở "Đang gửi" mà máy chủ không nhận được POST nào.
+- `document.body.innerText` bị CSS `text-transform` viết hoa hết, còn
+  `document.body.textContent` lại nuốt cả dữ liệu trong thẻ `<script>` của Next
+  nên tìm chuỗi gì cũng thấy. Phải bỏ script ra rồi mới đọc.
+- Đọc trang ngay sau khi bấm nút là đọc trúng trang cũ. Phải chờ một dấu hiệu
+  chỉ có ở trang mới.
+
+`npm run kiem` chạy nhanh, không cần trình duyệt, kiểm ba chỗ dễ sai nhất mà
+hỏng thì im lặng. Cũng là cổng thật: cố tình làm hỏng biểu thức nhận mã video
+thì nó trượt và thoát mã 1, đã thử rồi khôi phục.
 
 - **Bóc link.** Nhận đúng mọi dạng link YouTube và TikTok mà sinh viên hay dán,
   từ chối link kênh và link playlist, quy hai dạng link của cùng một video về
